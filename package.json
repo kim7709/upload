@@ -1,9 +1,9 @@
 {
   "name": "upload",
   "version": "1.0.0",
-  "main": "upload-1.js",
+  "main": "upload.js",
   "scripts": {
-    "start": "node upload-1.js",
+    "start": "node upload.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
