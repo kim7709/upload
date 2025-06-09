@@ -1,7 +1,7 @@
 {
   "name": "upload",
   "version": "1.0.0",
-  "main": "upload-server.js",
+  "main": "upload-1.js",
   "scripts": {
     "start": "node upload-server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
