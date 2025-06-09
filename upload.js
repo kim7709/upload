@@ -16,7 +16,7 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000; // ✅ Render용 수정
 
 // 📁 업로드 폴더 설정
 const uploadDir = path.join(__dirname, 'uploads');
@@ -30,28 +30,21 @@ app.get('/images/latest', (req, res) => {
     console.log('✅ [latest] 요청 들어옴');
 
     const files = fs.readdirSync(uploadDir)
-      .filter(f => {
-        console.log('📁 파일 있음:', f);
-        return f.endsWith('.jpg');
-      })
+      .filter(f => f.endsWith('.jpg'))
       .sort((a, b) => {
         const aTime = fs.statSync(path.join(uploadDir, a)).mtime;
         const bTime = fs.statSync(path.join(uploadDir, b)).mtime;
         return bTime - aTime;
       });
 
-    console.log('📋 필터링 후 파일 목록:', files);
-
     if (files.length > 0) {
       const filename = files[0];
       console.log('📄 최신 파일:', filename);
-
       res.sendFile(filename, {
         root: uploadDir,
         headers: { 'Content-Type': 'image/jpeg' }
       });
     } else {
-      console.warn('⚠️ jpg 파일이 없습니다');
       res.status(404).send("No images available.");
     }
   } catch (err) {
@@ -150,7 +143,7 @@ app.post('/api/control', express.json(), (req, res) => {
   res.send({ status: 'ok', topic, action });
 });
 
-// 👇 반드시 마지막
+// ✅ Render가 감지할 수 있도록 포트 리슨
 app.listen(PORT, () => {
   console.log(`🚀 Upload server running at http://localhost:${PORT}`);
 });
